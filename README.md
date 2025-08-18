@@ -1,4 +1,4 @@
-ALL THE FILES ARE IN THE MUSICAL EAR FOLDER!
+ALL THE FILES ARE IN THE EAR TRAINING FOLDER!
 
 WORKS ONLY FOR macOS
 
@@ -28,7 +28,7 @@ and also playing what you hear in your head. After that you will learn to recogn
 the different sounds including: triads, scales, melodies, licks.
 
 To download:
-* Grab the files from the Musical Ear folder
+* Grab the files from the Ear Training folder
 * Download the required libraries onto your device
 * Run the program in your the console
 * OR make your own launchers to make everything really easy
