@@ -1,4 +1,5 @@
 ALL THE FILES ARE IN THE MUSICAL EAR FOLDER
+
 WORKS ONLY FOR macOS
 
 Welcome to Musical Ear!
