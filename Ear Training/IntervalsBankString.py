@@ -3,7 +3,7 @@ import secrets
 from playsound import playsound
 
 print("\n\n\nHello, this is the Ear to Instrument Trainer!")
-print("This is the random interval practice.")
+print("This is the interval practice with a bank and the ability\nto choose which string.")
 print("\nN for new sound, ")
 print("R to repeat sound,")
 print("T to generate new reference tone,")
@@ -57,6 +57,8 @@ def createReferenceToneNumber(s):
 	return secrets.randbelow(numberOfFrets + 1)
 
 # Returns a random number bank of intervals depending
+# Strings 1, 2, 5, and 6 have different banks due to difficulty of finding larger intervals on
+# a single string and it's easier to hardcode since the bank has a small pre-determined size
 def createIntervalBank(s):
 	# Create bank and shuffle it keeping in mind what string is chosen
 	bank = []
@@ -79,11 +81,18 @@ def createIntervalBank(s):
 	return bank
 
 print("\nWhat guitar string would you like to use for this session?")
-print("Choose a number from 1 to 6. Enter 0 for a random string.")
+print("Choose a number from 1 to 6. Enter 0 for a random string.\n")
 referenceStringInput = input("Enter a number from 0 to 6: ")
+# Make sure the user is typying in a valid string number (0 for random, or 1 - 6)
 while (not isValidGuitarString(referenceStringInput)):
 	print("That was not a valid number from 0 to 6.")
 	referenceStringInput = input("Enter a number from 0 to 6: ")
+# If a random string is selected (0), then automatically choose one for the user
+if (referenceStringInput == "0"):
+	randoString = secrets.randbelow(6) + 1
+	print("Randomly chosen string: " + str(randoString))
+	referenceStringInput = str(randoString)
+print() # Empty print statement for better spacing
 
 # Generates random reference tone for exercise
 referenceTone = createReferenceToneNumber(referenceStringInput)
@@ -105,6 +114,7 @@ while userInput != "":
 				condition = True
 
 		if condition:
+			print("Remaining: "+str(len(intervalBank)-1)) # Print remaining intervals in bank
 			playsound("Sounds/Notes/"+str(referenceTone)+'.WAV') # Play original reference tone
 			playsound("Sounds/Notes/"+str(referenceTone + intervalNumber)+'.WAV') # Play mystery interval
 		else:

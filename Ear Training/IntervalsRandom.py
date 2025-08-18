@@ -4,7 +4,7 @@ from playsound import playsound
 
 print("\n\n\nHello, this is the Ear to Instrument Trainer!")
 print("This is the random interval practice.")
-print("\nN for new sound, R to repeat interval,\nNothing to exit.")
+print("\nN for new sound, R to repeat interval,\nNothing to exit.\n")
 
 userInput = "n" # Sets user up to start the exercise
 maxInterval = 12 # Maximum interval that user can figure out
@@ -12,12 +12,15 @@ maxNotes = 46 # Maximum notes available to play on the instrument
 
 referenceTone = secrets.randbelow(maxNotes+1) # Generates random reference tone for exercise
 intervalNumber = 0 # Default 0 interval before generating random interval
+count = 0 # Counter for how many sounds have been played
 
 while userInput != "":
 
 	# Generate new random interval number for user to figure out
 	if userInput == "n" or userInput == "N":
 
+		count = count + 1 # Increase count by one
+		
 		intervalNumber = secrets.randbelow(maxInterval+1) # Generate random interval
 		if secrets.randbelow(2) == 1: # Interval may go up or down randomly
 			intervalNumber = intervalNumber * -1
@@ -27,7 +30,8 @@ while userInput != "":
 			intervalNumber = secrets.randbelow(maxInterval+1) # Generate random interval
 			if secrets.randbelow(2) == 1: # Interval may go up or down randomly
 				intervalNumber = intervalNumber * -1
-				
+
+		print("Count: " + str(count))	
 		playsound("Sounds/Notes/"+str(referenceTone)+'.WAV') # Play original reference tone
 		playsound("Sounds/Notes/"+str(referenceTone + intervalNumber)+'.WAV') # Play mystery interval
 

@@ -27,6 +27,8 @@ def isValidGuitarString(guitarStr):
 # The program assumes the user is in standard tuning
 # Strings 1-5 have their separate tones, the default return is the 6th string
 def createReferenceToneNumber(guitarStr, numFrets):
+	# DEBUGGING LINE BELOW (COMMENT OUT)
+	#return 23
 	if guitarStr == "1":
 		return secrets.randbelow(numFrets + 1) + 24
 	if guitarStr == "2":
@@ -47,9 +49,9 @@ def findMaxPlayableNote(numFrets):
 
 # Introduction
 print("\n\nHello, this is the Ear to Instrument Trainer!")
-print("This is the random sound practice.")
+print("This is the random sound practice with the ability to choose which string.")
 
-userInput = "R" # Sets user up to start the exercise
+userInput = "N" # Sets user up to start the exercise
 numberOfFrets = 15 # Number of playable frets on your guitar
 # Classical Guitar default is 15
 # Acoustic Guitar default is 20
@@ -58,11 +60,16 @@ maxNote = findMaxPlayableNote(numberOfFrets) # Find the maximum playable note on
 
 # User picks string and random note on string (reference tone) is selected
 print("\nWhat guitar string would you like to use for this session?")
-print("Choose a number from 1 to 6. Enter 0 for a random string.")
+print("Choose a number from 1 to 6. Enter 0 for a random string.\n")
 referenceStringInput = input("Enter a number from 0 to 6: ")
 while (not isValidGuitarString(referenceStringInput)):
 	print("That was not a valid number from 0 to 6.")
 	referenceStringInput = input("Enter a number from 0 to 6: ")
+# If a random string is selected (0), then automatically choose one for the user
+if (referenceStringInput == "0"):
+	randoString = secrets.randbelow(6) + 1
+	print("Randomly chosen string: " + str(randoString))
+	referenceStringInput = str(randoString)
 
 # Generates random reference tone for exercise
 referenceTone = createReferenceToneNumber(referenceStringInput, numberOfFrets)
@@ -71,12 +78,12 @@ referenceTone = createReferenceToneNumber(referenceStringInput, numberOfFrets)
 pList = Playlist(referenceTone, maxNote)
 sound = pList.getNextSound()
 TempWAVfile(sound)
+count = 0 # Counter for how many sounds have been played
 
 print("\nN for new sound, R to repeat interval, T to reset reference tone.")
 print("Nothing to exit.\n")
 
 while userInput != "":
-
 
 	# "R" to play the same sounds again
 	if userInput.upper() == "R":
@@ -85,12 +92,19 @@ while userInput != "":
 
 	# "N" to generate new random sound for user to figure out
 	elif userInput.upper() == "N":
+
+		count = count + 1 # Increase count by one
+
 		if len(pList.playlist) > 0:
 			sound = pList.getNextSound()
 			TempWAVfile(sound)
+			# Print current count of sounds played and remaining sounds in bank
+			print("Count: " + str(count) + ", Remaining: " + str(pList.lengthPlaylist()))
+
 			playsound("Sounds/Notes/"+str(referenceTone)+'.wav') # Play original reference tone
 			playsound('Sounds/Temp.wav') # Play mystery sound
-		elif len(pList.playlist) == 0:
+			
+		elif pList.lengthPlaylist() == 0:
 			print("Playlist is empty.")
 
 	# "T" to reset the reference tone

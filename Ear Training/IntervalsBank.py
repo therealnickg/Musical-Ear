@@ -3,8 +3,8 @@ import secrets
 from playsound import playsound
 
 print("\n\n\nHello, this is the Ear to Instrument Trainer!")
-print("This is the random interval practice.")
-print("\nN for new sound, R to repeat interval,\nNothing to exit.")
+print("This is the interval practice with a bank.")
+print("\nN for new sound, R to repeat interval,\nNothing to exit.\n")
 
 userInput = "n" # Sets user up to start the exercise
 maxInterval = 12 # Maximum interval that user can figure out
@@ -26,6 +26,7 @@ while userInput != "":
 
 	# Generate new random interval number for user to figure out
 	if userInput == "n" or userInput == "N":
+		
 		# Do not let the program crash due to an empty array
 		condition = False # Condition to be satisfied in while loop
 		while not condition and len(intervalBank) > 1:
@@ -37,6 +38,7 @@ while userInput != "":
 				condition = True
 
 		if condition:
+			print("Remaining: "+str(len(intervalBank)-1)) # Print remaining intervals in bank
 			playsound("Sounds/Notes/"+str(referenceTone)+'.WAV') # Play original reference tone
 			playsound("Sounds/Notes/"+str(referenceTone + intervalNumber)+'.WAV') # Play mystery interval
 		else:

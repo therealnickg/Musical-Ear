@@ -7,8 +7,8 @@ from pydub import AudioSegment
 
 class TempWAVfile:
     # Constructor that transposes and creates WAV file
-    # List Format is [MIDI_FILE_NAME, START_STEP, CORRECTION, TRIM_DURATION_MS, NUM_STEPS]
-    # START_STEP is the first note in the soundfile?
+    # List Format is [MIDI_FILE_NAME, CONSTANT, CORRECTION, TRIM_DURATION_MS, NUM_STEPS]
+    # CONSTANT is a correction due to files starting on notes that don't coincide with the name
     # NUM_STEPS is the number of steps to be transposed
     # TRIM_DURATION_MS is the duration of .WAV file in milliseconds
     def __init__(self, sound):
@@ -17,7 +17,7 @@ class TempWAVfile:
         OUTPUT_DIR = 'Sounds/'
         os.makedirs(OUTPUT_DIR, exist_ok=True)
         wav_out = os.path.join(OUTPUT_DIR, 'Temp.wav')
-        self.render_transposed_wav(original_midi, 0-sound[1]+sound[2]+sound[4], wav_out, sound[3])
+        self.render_transposed_wav(original_midi, sound[1]+sound[2]+sound[4], wav_out, sound[3])
 
     # Transpose the MIDI file by the desired number of steps
     def transpose_midi_in_memory(self, mid, semitone_shift, tempo_bpm):
